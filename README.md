@@ -1,0 +1,1 @@
+# inwentaryzacja_local
