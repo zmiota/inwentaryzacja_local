@@ -1,1 +1,1 @@
-# inwentaryzacja_local
+NEW
