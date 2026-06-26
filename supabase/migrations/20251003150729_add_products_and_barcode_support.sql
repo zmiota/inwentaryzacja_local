@@ -61,6 +61,7 @@ END $$;
 ALTER TABLE products ENABLE ROW LEVEL SECURITY;
 
 -- Polityki publicznego dostępu dla produktów
+DROP POLICY IF EXISTS "Allow public access to products" ON products;
 CREATE POLICY "Allow public access to products" 
   ON products FOR ALL 
   USING (true);

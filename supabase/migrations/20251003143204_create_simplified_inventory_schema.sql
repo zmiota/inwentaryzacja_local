@@ -79,18 +79,22 @@ ALTER TABLE inventory_entries ENABLE ROW LEVEL SECURITY;
 ALTER TABLE final_inventory_entries ENABLE ROW LEVEL SECURITY;
 
 -- Polityki publicznego dostępu
+DROP POLICY IF EXISTS "Allow public access to inventories" ON inventories;
 CREATE POLICY "Allow public access to inventories" 
   ON inventories FOR ALL 
   USING (true);
 
+DROP POLICY IF EXISTS "Allow public access to categories" ON categories;
 CREATE POLICY "Allow public access to categories" 
   ON categories FOR ALL 
   USING (true);
 
+DROP POLICY IF EXISTS "Allow public access to inventory_entries" ON inventory_entries;
 CREATE POLICY "Allow public access to inventory_entries" 
   ON inventory_entries FOR ALL 
   USING (true);
 
+DROP POLICY IF EXISTS "Allow public access to final_inventory_entries" ON final_inventory_entries;
 CREATE POLICY "Allow public access to final_inventory_entries" 
   ON final_inventory_entries FOR ALL 
   USING (true);
