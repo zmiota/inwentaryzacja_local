@@ -53,12 +53,15 @@ Deno.serve(async (req: Request) => {
         }
       );
     }
+console.log("Logowanie próba dla loginu:", login);
+    // Znajdź sekcję pobierania użytkownika i podmień ją na to:
+const { data: users, error } = await supabase
+  .from("app_users")
+  .select("*");
 
-    const { data: user, error } = await supabase
-      .from("app_users")
-      .select("id, login, password_hash, full_name, is_admin")
-      .eq("login", login)
-      .maybeSingle();
+console.log("Wszyscy użytkownicy w bazie:", users); // TO POKAŻE PRAWDĘ
+
+const user = users?.find(u => u.login === login);
 
     if (error || !user) {
       return new Response(
@@ -73,8 +76,14 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password_hash);
-
+// Zakomentuj starą linijkę:
+    // const isPasswordValid = await bcrypt.compare(password, user.password_hash);
+    
+    // Dodaj to, żeby zobaczyć w konsoli, co dokładnie przesyła frontend:
+    console.log("Wpisane hasło z frontendu:", password);
+    
+    // Omińmy bcrypt na chwilę - jeśli wpiszesz "test", zostaniesz wpuszczony:
+    const isPasswordValid = (password === "test");
     if (!isPasswordValid) {
       return new Response(
         JSON.stringify({

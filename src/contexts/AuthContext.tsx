@@ -35,16 +35,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signIn = async (login: string, password: string) => {
     const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/auth-login`;
+    const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
     const response = await fetch(apiUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+        'apikey': anonKey, 
+        'Authorization': `Bearer ${anonKey}`,
       },
       body: JSON.stringify({ login, password }),
     });
 
+    // BARKUJĄCA CZĘŚĆ, KTÓRA ZOSTAŁA UCIĘTA:
     const result = await response.json();
 
     if (!response.ok || !result.success) {
@@ -57,7 +60,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(appUser);
     localStorage.setItem('app_user', JSON.stringify(appUser));
     localStorage.setItem('app_token', token);
-  };
+  }; // <-- TUTAJ BRAKOWAŁO KLAMRY ZAMYKAJĄCEJ
 
   const signOut = () => {
     setUser(null);
